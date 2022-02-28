@@ -3,27 +3,26 @@ import 'package:mahua_pet/styles/app_style.dart';
 import 'package:video_player/video_player.dart';
 
 class FindVideoItem extends StatefulWidget {
-
   final String videoURL;
 
-  FindVideoItem({Key key, this.videoURL}): super(key: key);
+  FindVideoItem({Key key, this.videoURL}) : super(key: key);
 
   @override
   _FindVideoItemState createState() => _FindVideoItemState();
 }
 
 class _FindVideoItemState extends State<FindVideoItem> {
-
   VideoPlayerController _videoController;
 
   @override
-  void initState() {    
+  void initState() {
     super.initState();
 
-    _videoController = VideoPlayerController.network(widget.videoURL)..initialize().then((value) {
-      _videoController.pause();
-      setState(() {});
-    });
+    _videoController = VideoPlayerController.network(widget.videoURL)
+      ..initialize().then((value) {
+        _videoController.pause();
+        setState(() {});
+      });
   }
 
   @override
@@ -51,10 +50,10 @@ class _FindVideoItemState extends State<FindVideoItem> {
     }
 
     _videoController = VideoPlayerController.network(widget.videoURL)
-    ..initialize().then((value) {
-      _videoController.pause();
-      setState(() {});
-    });
+      ..initialize().then((value) {
+        _videoController.pause();
+        setState(() {});
+      });
   }
 
   @override
@@ -64,9 +63,7 @@ class _FindVideoItemState extends State<FindVideoItem> {
       height: (SizeFit.screenWidth / 3 * 2) / 16 * 9,
       margin: EdgeInsets.only(top: 8.px),
       decoration: BoxDecoration(
-        color: Colors.black,
-        borderRadius: BorderRadius.circular(4)
-      ),
+          color: Colors.black, borderRadius: BorderRadius.circular(4)),
       child: Stack(children: renderVideoItem()),
     );
   }
@@ -74,7 +71,7 @@ class _FindVideoItemState extends State<FindVideoItem> {
   List<Widget> renderVideoItem() {
     List<Widget> itemList = [];
 
-    final isInitial = _videoController.value.initialized;
+    final isInitial = _videoController.value.isInitialized;
     if (isInitial) {
       Widget playerItem = Center(
         child: AspectRatio(
@@ -84,7 +81,10 @@ class _FindVideoItemState extends State<FindVideoItem> {
       );
       itemList.add(playerItem);
 
-      Widget pauseItem = Positioned(child: Center(child: Image.asset(TKImages.image_path + 'video_play.png', width: 55.px, height: 55.px)));
+      Widget pauseItem = Positioned(
+          child: Center(
+              child: Image.asset(TKImages.image_path + 'video_play.png',
+                  width: 55.px, height: 55.px)));
       itemList.add(pauseItem);
     } else {
       Widget loading = Center(child: CircularProgressIndicator());
